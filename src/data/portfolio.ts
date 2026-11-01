@@ -38,14 +38,14 @@ export const profile = {
   school: "Kendriya Vidyalaya No. 1, Pratap Nagar",
   currentRole: "State Team Manager — Rajasthan Lacrosse",
   careerGoal:
-    "Become a successful software developer and represent India as a lacrosse player at the international level.",
+    "Become a successful software developer and represent as a national lacrosse player.",
   interests: ["Programming", "Artificial Intelligence", "Web Development", "Lacrosse & Sports Leadership", "Open Source", "Emerging Tech"],
-  // 👤 ① Put your photo at public/images/profile.jpg and keep this path:
-  profilePhoto: "", // e.g. "/images/profile.jpg" — empty = monogram fallback
+  // 👤 ① Put your photo at public/images/profile.png and keep this path:
+  profilePhoto: "/images/profile.png",
   // 📄 ② Drop your PDF at public/Mohit-Dangi-Resume.pdf
   resumeUrl: "/Mohit-Dangi-Resume.pdf",
   resumeFileName: "Mohit-Dangi-Resume.pdf",
-  email: "mohit.dangi.connect@gmail.com",
+  email: "mohitdangi151@gmail.com",
 } as const;
 
 export const socials = {
@@ -53,7 +53,8 @@ export const socials = {
   github: "https://github.com/Mohitdangi830",
   linkedin: "https://www.linkedin.com/in/mohit-d-6392a1388/",
   instagram: "https://www.instagram.com/mohitdangi830/",
-  email: "mailto:mohit.dangi.connect@gmail.com",
+  discord: "BOSS 83029",
+  email: "mailto:mohitdangi151@gmail.com",
 } as const;
 
 export type SkillLevel = "Learning" | "Building" | "Comfortable" | "Core";

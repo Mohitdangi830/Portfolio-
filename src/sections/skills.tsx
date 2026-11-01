@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Terminal, Globe, Wrench, Users, Cpu, Hexagon } from "lucide-react";
 import { skillCategories, type SkillLevel } from "../data/portfolio";
-import { Reveal, SectionHeading } from "../components/ui";
+import { Reveal, SectionHeading, TiltCard } from "../components/ui";
 
 const CATEGORY_ICONS: Record<string, typeof Terminal> = {
   terminal: Terminal,
@@ -37,7 +37,7 @@ export function Skills() {
             const Icon = CATEGORY_ICONS[cat.icon] ?? Cpu;
             return (
               <Reveal key={cat.id} delay={ci * 0.09} className="flex">
-                <div className="glass card-lift group relative flex-1 overflow-hidden rounded-3xl p-6">
+                <TiltCard max={8} className="glass card-lift group relative flex-1 overflow-hidden rounded-3xl p-6">
                   {/* hover glow wash */}
                   <div className="pointer-events-none absolute -top-20 left-1/2 h-40 w-40 -translate-x-1/2 rounded-full bg-cyan-500/0 blur-3xl transition-all duration-500 group-hover:bg-cyan-500/15" aria-hidden="true" />
                   <div className="relative mb-5 flex items-center gap-3">
@@ -72,7 +72,7 @@ export function Skills() {
                       </motion.li>
                     ))}
                   </ul>
-                </div>
+                </TiltCard>
               </Reveal>
             );
           })}

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Sun, Moon, Menu, X, Mail, Terminal, Gauge } from "lucide-react";
-import { GithubIcon, LinkedinIcon, InstagramIcon } from "./icons";
+import { GithubIcon, LinkedinIcon, InstagramIcon, DiscordIcon } from "./icons";
 import { navLinks, profile, socials } from "../data/portfolio";
 import { Magnetic } from "./ui";
 import { cn } from "../utils/cn";
@@ -46,8 +46,12 @@ export function Preloader({ onDone }: { onDone: () => void }) {
         <div className="mb-6 flex items-center justify-center">
           <div className="relative">
             <div className="absolute inset-0 animate-ping rounded-2xl bg-cyan-500/20" />
-            <div className="relative flex h-16 w-16 items-center justify-center rounded-2xl border border-cyan-400/40 bg-cyan-400/5 font-display text-xl font-bold text-cyan-300">
-              MD
+            <div className="relative flex h-16 w-16 items-center justify-center overflow-hidden rounded-2xl border border-cyan-400/40 bg-cyan-400/5 font-display text-xl font-bold text-cyan-300 shadow-[0_0_25px_rgba(34,211,238,0.3)]">
+              {profile.profilePhoto ? (
+                <img src={profile.profilePhoto} alt="MD" className="h-full w-full object-cover" />
+              ) : (
+                "MD"
+              )}
             </div>
           </div>
         </div>
@@ -126,14 +130,18 @@ export function Navbar({
       >
         <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 md:h-[72px] lg:px-8" aria-label="Main navigation">
           <a href="#home" className="group flex items-center gap-3" aria-label="Mohit Dangi — home">
-            <span className="relative flex h-9 w-9 items-center justify-center rounded-lg border border-cyan-400/50 bg-gradient-to-br from-cyan-500/15 to-violet-600/15 font-display text-sm font-bold text-cyan-300 transition-shadow group-hover:shadow-[0_0_18px_rgba(34,211,238,0.5)]">
-              MD
+            <span className="relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-lg border border-cyan-400/50 bg-[#070a22] font-display text-sm font-bold text-cyan-300 transition-all group-hover:shadow-[0_0_18px_rgba(34,211,238,0.5)] group-hover:scale-105">
+              {profile.profilePhoto ? (
+                <img src={profile.profilePhoto} alt="MD" className="h-full w-full object-cover" />
+              ) : (
+                "MD"
+              )}
               <span className="absolute -top-1 -right-1 h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399]" />
             </span>
             <span className="hidden flex-col leading-none sm:flex">
               <span className="font-display text-sm font-bold tracking-wider">MOHIT.DEV</span>
-              <span className="font-mono2 text-[9px] tracking-[0.3em] uppercase" style={{ color: "var(--ink-mute)" }}>
-                AI Command
+              <span className="font-mono2 text-[9px] tracking-[0.3em] uppercase" style={{ color: "var(--neon)" }}>
+                3D Command Core
               </span>
             </span>
           </a>
@@ -233,6 +241,7 @@ export function Navbar({
                 <a href={socials.github} target="_blank" rel="noreferrer" aria-label="GitHub" className="btn-ghost flex h-11 w-11 items-center justify-center rounded-full"><GithubIcon className="h-5 w-5" /></a>
                 <a href={socials.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn" className="btn-ghost flex h-11 w-11 items-center justify-center rounded-full"><LinkedinIcon className="h-5 w-5" /></a>
                 <a href={socials.instagram} target="_blank" rel="noreferrer" aria-label="Instagram" className="btn-ghost flex h-11 w-11 items-center justify-center rounded-full"><InstagramIcon className="h-5 w-5" /></a>
+                <a href="#contact" aria-label="Discord" title={`Discord: ${socials.discord}`} className="btn-ghost flex h-11 w-11 items-center justify-center rounded-full"><DiscordIcon className="h-5 w-5" /></a>
                 <a href={socials.email} aria-label="Email" className="btn-ghost flex h-11 w-11 items-center justify-center rounded-full"><Mail className="h-5 w-5" /></a>
               </motion.li>
             </motion.ul>
@@ -250,8 +259,12 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center gap-6 text-center">
           <a href="#home" className="flex items-center gap-3">
-            <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-cyan-400/50 bg-gradient-to-br from-cyan-500/15 to-violet-600/15 font-display text-sm font-bold text-cyan-300">
-              MD
+            <span className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-xl border border-cyan-400/50 bg-[#070a22] font-display text-sm font-bold text-cyan-300">
+              {profile.profilePhoto ? (
+                <img src={profile.profilePhoto} alt="MD" className="h-full w-full object-cover" />
+              ) : (
+                "MD"
+              )}
             </span>
             <span className="font-display text-lg font-bold tracking-widest">{profile.name.toUpperCase()}</span>
           </a>
@@ -264,6 +277,7 @@ export function Footer() {
               { icon: GithubIcon, href: socials.github, label: "GitHub" },
               { icon: LinkedinIcon, href: socials.linkedin, label: "LinkedIn" },
               { icon: InstagramIcon, href: socials.instagram, label: "Instagram" },
+              { icon: DiscordIcon, href: "#contact", label: `Discord (${socials.discord})` },
               { icon: Mail, href: socials.email, label: "Email" },
             ].map((s) => (
               <a

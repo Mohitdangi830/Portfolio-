@@ -37,7 +37,6 @@
 @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
 @keyframes aurora { 0% { transform: translate(-6%, -4%) rotate(-4deg) scale(1); } 100% { transform: translate(6%, 5%) rotate(5deg) scale(1.15); } }
 @keyframes gradient-x { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
-@keyframes cube-spin { 0% { transform: rotateX(-18deg) rotateY(0deg); } 100% { transform: rotateX(-18deg) rotateY(360deg); } }
 @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
 /* ── Design tokens ────────────────────────────────────────────────── */
@@ -181,18 +180,6 @@ body {
   background: linear-gradient(90deg, transparent, rgba(34,211,238,0.7), rgba(139,92,246,0.7), transparent);
   background-size: 200% 100%;
   animation: shimmer 3.2s linear infinite;
-}
-
-.cube-scene { perspective: 900px; }
-.cube-3d { transform-style: preserve-3d; animation: cube-spin 18s linear infinite; }
-.cube-face {
-  position: absolute; inset: 0;
-  display: flex; align-items: center; justify-content: center;
-  font-family: var(--font-display); font-weight: 700;
-  background: linear-gradient(135deg, rgba(34,211,238,0.14), rgba(139,92,246,0.14));
-  border: 1px solid rgba(34, 211, 238, 0.4);
-  backdrop-filter: blur(6px);
-  box-shadow: inset 0 0 40px rgba(34, 211, 238, 0.12);
 }
 
 .ticker-track { animation: ticker 28s linear infinite; }

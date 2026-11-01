@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Mail, Send, CheckCircle2, AlertCircle, Loader2, Radio, Copy, Check } from "lucide-react";
 import { profile, socials } from "../data/portfolio";
 import { Reveal, SectionHeading, Magnetic, TiltCard } from "../components/ui";
-import { GithubIcon, LinkedinIcon, InstagramIcon } from "../components/icons";
+import { GithubIcon, LinkedinIcon, InstagramIcon, DiscordIcon } from "../components/icons";
 
 const SOCIAL_CARDS = [
   {
@@ -29,6 +29,14 @@ const SOCIAL_CARDS = [
     icon: InstagramIcon,
     hover: "hover:border-fuchsia-400/50 hover:shadow-[0_0_40px_-10px_rgba(232,121,249,0.5)]",
     glow: "from-fuchsia-500/20 to-transparent",
+  },
+  {
+    name: "Discord",
+    handle: socials.discord,
+    href: "#contact",
+    icon: DiscordIcon,
+    hover: "hover:border-indigo-400/50 hover:shadow-[0_0_40px_-10px_rgba(99,102,241,0.5)]",
+    glow: "from-indigo-500/20 to-transparent",
   },
   {
     name: "Email",
@@ -100,7 +108,7 @@ export function Contact() {
         />
 
         {/* ── Social network ── */}
-        <div className="mx-auto mb-12 grid max-w-5xl gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mx-auto mb-12 grid max-w-6xl gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
           {SOCIAL_CARDS.map((s, i) => (
             <Reveal key={s.name} delay={i * 0.08}>
               <TiltCard max={12}>

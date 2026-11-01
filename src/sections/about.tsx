@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { GraduationCap, MapPin, Trophy, Heart, Target, User } from "lucide-react";
+import { GraduationCap, MapPin, Trophy, Heart, Target } from "lucide-react";
 import { profile } from "../data/portfolio";
 import { Reveal, SectionHeading, TiltCard } from "../components/ui";
 
@@ -7,10 +7,8 @@ const CARDS = [
   { icon: GraduationCap, label: "Education", value: profile.education, sub: profile.school },
   { icon: MapPin, label: "Location", value: profile.location, sub: "Open to remote & on-site" },
   { icon: Trophy, label: "Current Role", value: profile.currentRole, sub: "Leadership in sports" },
-  { icon: Target, label: "Career Goal", value: "Software developer + international lacrosse player", sub: "Code by day, train by evening" },
+  { icon: Target, label: "Career Goal", value: "Software developer + national lacrosse player", sub: "Code by day, train by evening" },
 ];
-
-const CUBE_FACES = ["C", "C++", "PY", "JS", "MD", "AI"];
 
 export function About() {
   return (
@@ -28,54 +26,35 @@ export function About() {
           <Reveal className="flex">
             <TiltCard className="glass-strong hud-corner relative flex w-full flex-col items-center overflow-hidden rounded-3xl p-8 text-center" max={7}>
               <div className="scanline" aria-hidden="true" />
-              {/* avatar */}
+              {/* Profile Avatar */}
               <div className="relative mb-6">
                 <div className="absolute -inset-3 rounded-full bg-gradient-to-r from-cyan-500/30 to-violet-600/30 blur-xl" aria-hidden="true" />
-                {profile.profilePhoto ? (
-                  <img
-                    src={profile.profilePhoto}
-                    alt={`${profile.name} — profile photo`}
-                    loading="lazy"
-                    className="relative h-28 w-28 rounded-full border-2 border-cyan-400/60 object-cover"
-                  />
-                ) : (
-                  <div className="relative flex h-28 w-28 items-center justify-center rounded-full border-2 border-cyan-400/60 bg-gradient-to-br from-cyan-500/20 via-blue-600/10 to-violet-600/20 font-display text-3xl font-bold text-cyan-200">
-                    MD
-                    <span className="absolute -right-1 -bottom-1 flex h-8 w-8 items-center justify-center rounded-full border border-emerald-400/50 bg-[#030014]">
-                      <User className="h-4 w-4 text-emerald-400" />
-                    </span>
-                  </div>
-                )}
+                <div className="group relative flex h-32 w-32 items-center justify-center overflow-hidden rounded-full border-2 border-cyan-400/60 bg-[#070a22] p-1.5 shadow-[0_0_30px_rgba(34,211,238,0.35)] transition-transform duration-300 hover:scale-105 sm:h-36 sm:w-36">
+                  {profile.profilePhoto ? (
+                    <img
+                      src={profile.profilePhoto}
+                      alt={`${profile.name} — Profile Picture`}
+                      className="h-full w-full rounded-full object-cover"
+                    />
+                  ) : (
+                    <div className="flex h-full w-full items-center justify-center font-display text-3xl font-bold text-cyan-200">
+                      MD
+                    </div>
+                  )}
+                  {/* Status beacon */}
+                  <span
+                    className="absolute right-1 bottom-1 flex h-6 w-6 items-center justify-center rounded-full border border-emerald-400/60 bg-[#030014] shadow-md"
+                    title="Active"
+                  >
+                    <span className="h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399]" />
+                  </span>
+                </div>
               </div>
 
               <h3 className="font-display text-2xl font-bold tracking-wide">{profile.name.toUpperCase()}</h3>
-              <p className="mt-1 text-sm" style={{ color: "var(--neon)" }}>{profile.primaryTitle}</p>
-
-              {/* CSS 3D rotating cube */}
-              <div className="cube-scene mt-8 mb-2 flex h-36 w-36 items-center justify-center" aria-hidden="true">
-                <div className="cube-3d relative h-24 w-24">
-                  {CUBE_FACES.map((f, i) => (
-                    <div
-                      key={i}
-                      className="cube-face rounded-lg text-lg text-cyan-200"
-                      style={{
-                        transform: [
-                          "rotateY(0deg) translateZ(48px)",
-                          "rotateY(90deg) translateZ(48px)",
-                          "rotateY(180deg) translateZ(48px)",
-                          "rotateY(-90deg) translateZ(48px)",
-                          "rotateX(90deg) translateZ(48px)",
-                          "rotateX(-90deg) translateZ(48px)",
-                        ][i],
-                      }}
-                    >
-                      {f}
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <p className="font-mono2 mt-2 text-[10px] tracking-[0.3em] uppercase" style={{ color: "var(--ink-mute)" }}>
-                Tech core · rotating
+              <p className="mt-1 text-sm font-medium" style={{ color: "var(--neon)" }}>{profile.primaryTitle}</p>
+              <p className="mt-4 max-w-xs text-xs leading-relaxed" style={{ color: "var(--ink-mute)" }}>
+                {profile.tagline}
               </p>
 
               {/* interests */}

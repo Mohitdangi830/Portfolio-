@@ -250,15 +250,12 @@ export function Hero() {
             ))}
 
           {/* bottom readout */}
-          <div className="glass absolute bottom-1 left-1/2 hidden w-max -translate-x-1/2 items-center gap-4 rounded-full px-5 py-2 font-mono2 text-[10px] tracking-widest sm:flex" style={{ color: "var(--ink-mute)" }}>
-            <span>CORE <span className="text-cyan-300">v2.6</span></span>
+          <div className="glass absolute -bottom-8 left-1/2 hidden w-max -translate-x-1/2 items-center gap-4 rounded-full px-5 py-2 font-mono2 text-[10px] tracking-widest sm:flex" style={{ color: "var(--ink-mute)" }}>
+            <span>3D ENGINE <span className="text-cyan-300">ACTIVE</span></span>
             <span className="h-3 w-px bg-white/15" />
-            <span>NEURAL LINK <span className="text-emerald-400">STABLE</span></span>
+            <span>INTERACTION <span className="text-emerald-400">ENABLED</span></span>
             <span className="h-3 w-px bg-white/15" />
-            <span className="relative flex h-1.5 w-1.5">
-              <span className="absolute h-full w-full animate-ping rounded-full bg-cyan-400 opacity-75" />
-              <span className="h-1.5 w-1.5 rounded-full bg-cyan-400" />
-            </span>
+            <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 shadow-[0_0_8px_#22d3ee]" />
           </div>
         </motion.div>
       </div>
