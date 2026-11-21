@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowDown, ArrowRight } from "lucide-react";
-import { profile } from "../data/portfolio";
+import { profile, type SectionId } from "../data/portfolio";
 import { Magnetic } from "../components/ui";
 
-export function Hero() {
+export function Hero({ onNavigate }: { onNavigate?: (id: SectionId) => void }) {
   const reduce = useReducedMotion();
   const [imgError, setImgError] = useState(false);
 
@@ -95,6 +95,12 @@ export function Hero() {
             <Magnetic strength={0.2}>
               <a
                 href="#projects"
+                onClick={(e) => {
+                  if (onNavigate) {
+                    e.preventDefault();
+                    onNavigate("projects");
+                  }
+                }}
                 className="btn-electric inline-flex items-center gap-2.5 rounded-full px-7 py-3.5 text-sm font-semibold whitespace-nowrap shrink-0"
               >
                 Explore My Work
@@ -104,6 +110,12 @@ export function Hero() {
             <Magnetic strength={0.2}>
               <a
                 href="#contact"
+                onClick={(e) => {
+                  if (onNavigate) {
+                    e.preventDefault();
+                    onNavigate("contact");
+                  }
+                }}
                 className="btn-outline inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold whitespace-nowrap shrink-0"
               >
                 Let&apos;s Collaborate

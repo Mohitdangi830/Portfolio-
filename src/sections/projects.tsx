@@ -421,9 +421,9 @@ function ProjectCard({
           </div>
         </div>
 
-        {/* Action Row: Live Demo & Case Study */}
-        <div className="mt-6 flex items-center gap-3 border-t pt-5" style={{ borderColor: "var(--border)" }}>
-          {project.liveUrl ? (
+        {/* Action Row: Live Demo & Case Study (only for The Creators) */}
+        {project.liveUrl && (
+          <div className="mt-6 flex items-center gap-3 border-t pt-5" style={{ borderColor: "var(--border)" }}>
             <a
               href={project.liveUrl}
               target="_blank"
@@ -433,26 +433,17 @@ function ProjectCard({
               Live Demo
               <ArrowUpRight className="h-3.5 w-3.5" />
             </a>
-          ) : (
+
             <button
               type="button"
-              onClick={() => onOpenModal("demo")}
-              className="btn-electric inline-flex flex-1 items-center justify-center gap-1.5 rounded-full px-4 py-2.5 text-xs font-semibold whitespace-nowrap shrink-0"
+              onClick={() => onOpenModal("case")}
+              className="btn-outline inline-flex flex-1 items-center justify-center gap-1.5 rounded-full px-4 py-2.5 text-xs font-semibold whitespace-nowrap shrink-0"
             >
-              Interactive Preview
-              <ArrowUpRight className="h-3.5 w-3.5" />
+              <BookOpen className="h-3.5 w-3.5" />
+              Case Study
             </button>
-          )}
-
-          <button
-            type="button"
-            onClick={() => onOpenModal("case")}
-            className="btn-outline inline-flex flex-1 items-center justify-center gap-1.5 rounded-full px-4 py-2.5 text-xs font-semibold whitespace-nowrap shrink-0"
-          >
-            <BookOpen className="h-3.5 w-3.5" />
-            Case Study
-          </button>
-        </div>
+          </div>
+        )}
       </div>
     </article>
   );

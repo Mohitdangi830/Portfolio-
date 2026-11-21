@@ -139,12 +139,14 @@ export function MouseLight() {
   );
 }
 
-/* ── Custom Animated Cursor ────────────────────────────────────────── */
+/* ── Custom Animated Cursor (Precision Plus + Crosshair) ─────────────── */
 export function CustomCursor() {
-  const dotRef = useRef<HTMLDivElement>(null);
-  const ringRef = useRef<HTMLDivElement>(null);
+  const plusRef = useRef<HTMLDivElement>(null);
+  const echoRef = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
   const [hovering, setHovering] = useState(false);
+  const [pressed, setPressed] = useState(false);
+  const [textMode, setTextMode] = useState(false);
   const reduce = useReducedMotion();
 
   useEffect(() => {
@@ -154,59 +156,121 @@ export function CustomCursor() {
     let raf = 0;
     let mx = -100;
     let my = -100;
-    let rx = -100;
-    let ry = -100;
+    let ex = -100;
+    let ey = -100;
+
     const onMove = (e: MouseEvent) => {
       mx = e.clientX;
       my = e.clientY;
       setVisible(true);
       const t = e.target as HTMLElement | null;
-      setHovering(!!t?.closest("a, button, input, textarea, select, [data-hover]"));
+      const isText = !!t?.closest("input, textarea");
+      setTextMode(isText);
+      setHovering(
+        !isText &&
+          !!t?.closest("a, button, select, [role='button'], [role='tab'], [role='radio'], [data-hover]")
+      );
     };
-    const onLeave = () => setVisible(false);
+    const onDown = () => setPressed(true);
+    const onUp = () => setPressed(false);
+    const onLeave = () => {
+      setVisible(false);
+      setPressed(false);
+    };
+
     const loop = () => {
-      rx += (mx - rx) * 0.18;
-      ry += (my - ry) * 0.18;
-      if (dotRef.current) dotRef.current.style.transform = `translate3d(${mx}px, ${my}px, 0)`;
-      if (ringRef.current) ringRef.current.style.transform = `translate3d(${rx}px, ${ry}px, 0)`;
+      ex += (mx - ex) * 0.22;
+      ey += (my - ey) * 0.22;
+      if (plusRef.current) plusRef.current.style.transform = `translate3d(${mx}px, ${my}px, 0)`;
+      if (echoRef.current) echoRef.current.style.transform = `translate3d(${ex}px, ${ey}px, 0)`;
       raf = requestAnimationFrame(loop);
     };
+
     window.addEventListener("mousemove", onMove);
+    window.addEventListener("mousedown", onDown);
+    window.addEventListener("mouseup", onUp);
     document.documentElement.addEventListener("mouseleave", onLeave);
     loop();
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("mousedown", onDown);
+      window.removeEventListener("mouseup", onUp);
       document.documentElement.removeEventListener("mouseleave", onLeave);
       document.documentElement.classList.remove("has-custom-cursor");
     };
   }, [reduce]);
 
   if (reduce) return null;
+
+  const armColor = hovering || pressed ? "#FF7138" : "var(--ink)";
+  const glowColor = hovering || pressed ? "rgba(255, 113, 56, 0.55)" : "rgba(57, 135, 255, 0.5)";
+
   return (
     <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-[200] hidden [@media(pointer:fine)]:block">
+      {/* Subtle trailing plus echo */}
       <div
-        ref={dotRef}
-        className="absolute top-0 left-0 -mt-[3px] -ml-[3px] h-1.5 w-1.5 rounded-full transition-opacity duration-300"
-        style={{
-          background: "var(--cursor)",
-          boxShadow: "0 0 12px var(--cursor)",
-          opacity: visible ? 1 : 0,
-        }}
-      />
+        ref={echoRef}
+        className="absolute top-0 left-0 transition-opacity duration-200"
+        style={{ opacity: visible && !textMode ? (hovering ? 0.45 : 0.28) : 0 }}
+      >
+        <div
+          className="relative transition-transform duration-200 ease-out"
+          style={{
+            transform: pressed ? "scale(0.8)" : hovering ? "scale(1.45)" : "scale(1.15)",
+          }}
+        >
+          <span
+            className="absolute top-0 left-0 h-[1.5px] w-7 -translate-x-1/2 -translate-y-1/2 rounded-full transition-colors duration-200"
+            style={{ backgroundColor: hovering ? "#FF7138" : "#3987FF" }}
+          />
+          <span
+            className="absolute top-0 left-0 h-7 w-[1.5px] -translate-x-1/2 -translate-y-1/2 rounded-full transition-colors duration-200"
+            style={{ backgroundColor: hovering ? "#FF7138" : "#3987FF" }}
+          />
+        </div>
+      </div>
+
+      {/* Zero-lag crisp plus (+) crosshair */}
       <div
-        ref={ringRef}
-        className="absolute top-0 left-0 rounded-full border transition-[width,height,margin,border-color,opacity,background-color] duration-200 ease-out"
-        style={{
-          width: hovering ? 48 : 30,
-          height: hovering ? 48 : 30,
-          marginLeft: hovering ? -24 : -15,
-          marginTop: hovering ? -24 : -15,
-          borderColor: hovering ? "var(--cursor)" : "color-mix(in srgb, var(--cursor) 45%, transparent)",
-          backgroundColor: hovering ? "rgba(57, 135, 255, 0.10)" : "transparent",
-          opacity: visible ? 1 : 0,
-        }}
-      />
+        ref={plusRef}
+        className="absolute top-0 left-0 transition-opacity duration-150"
+        style={{ opacity: visible ? 1 : 0 }}
+      >
+        {textMode ? (
+          <div
+            className="-mt-2.5 -ml-[1px] h-5 w-[2px] rounded-full"
+            style={{
+              backgroundColor: "var(--cursor)",
+              boxShadow: "0 0 10px var(--cursor)",
+            }}
+          />
+        ) : (
+          <div
+            className="relative transition-transform duration-150 ease-out"
+            style={{
+              transform: pressed ? "scale(0.76)" : hovering ? "scale(1.25)" : "scale(1)",
+              filter: `drop-shadow(0 0 7px ${glowColor})`,
+            }}
+          >
+            {/* Horizontal bar */}
+            <span
+              className="absolute top-0 left-0 h-[2px] w-5 -translate-x-1/2 -translate-y-1/2 rounded-full transition-colors duration-150"
+              style={{ backgroundColor: armColor }}
+            />
+            {/* Vertical bar */}
+            <span
+              className="absolute top-0 left-0 h-5 w-[2px] -translate-x-1/2 -translate-y-1/2 rounded-full transition-colors duration-150"
+              style={{ backgroundColor: armColor }}
+            />
+            {/* Center intersection point */}
+            <span
+              className="absolute top-0 left-0 h-1 w-1 -translate-x-1/2 -translate-y-1/2 rounded-full transition-colors duration-150"
+              style={{ backgroundColor: hovering ? "#FFFFFF" : "#3987FF" }}
+            />
+          </div>
+        )}
+      </div>
     </div>
   );
 }

@@ -12,6 +12,7 @@
 /* ── Design Tokens: Deep Midnight Black (Primary) & Architectural Light ── */
 :root {
   --bg: #08090d;
+  --bg-band: #0c0f17;
   --bg-secondary: #11141c;
   --bg-elevated: #161a24;
   --ink: #ffffff;
@@ -29,6 +30,7 @@
 
 .light {
   --bg: #f6f7fb;
+  --bg-band: #eef1f8;
   --bg-secondary: #ffffff;
   --bg-elevated: #edf0f7;
   --ink: #0b0d14;
@@ -96,7 +98,9 @@ body {
 @media (pointer: fine) {
   .has-custom-cursor,
   .has-custom-cursor a,
-  .has-custom-cursor button {
+  .has-custom-cursor button,
+  .has-custom-cursor input,
+  .has-custom-cursor textarea {
     cursor: none;
   }
 }

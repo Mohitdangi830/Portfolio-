@@ -26,13 +26,92 @@ export const socials = {
   email: "mailto:mohitdangi151@gmail.com",
 } as const;
 
-export const navLinks = [
-  { label: "About", href: "#about" },
-  { label: "Expertise", href: "#expertise" },
-  { label: "Projects", href: "#projects" },
-  { label: "Sports", href: "#sports" },
-  { label: "The Creators", href: "#creators" },
-] as const;
+export type SectionId =
+  | "home"
+  | "about"
+  | "expertise"
+  | "projects"
+  | "journey"
+  | "sports"
+  | "creators"
+  | "contact";
+
+export interface SectionMeta {
+  id: SectionId;
+  index: string;
+  label: string;
+  title: string;
+  tagline: string;
+}
+
+export const portfolioSections: SectionMeta[] = [
+  {
+    id: "home",
+    index: "01",
+    label: "Home",
+    title: "Overview",
+    tagline: "Full Portfolio & Introduction",
+  },
+  {
+    id: "about",
+    index: "02",
+    label: "About",
+    title: "About Me",
+    tagline: "Identity, Story & Pillars",
+  },
+  {
+    id: "expertise",
+    index: "03",
+    label: "Expertise",
+    title: "My Expertise",
+    tagline: "Engineering, Design & AI",
+  },
+  {
+    id: "projects",
+    index: "04",
+    label: "Projects",
+    title: "Featured Projects",
+    tagline: "Selected Digital Builds",
+  },
+  {
+    id: "journey",
+    index: "05",
+    label: "Experience",
+    title: "Experience & Achievements",
+    tagline: "Milestones & Impact",
+  },
+  {
+    id: "sports",
+    index: "06",
+    label: "Sports",
+    title: "Sports & Leadership",
+    tagline: "Lacrosse & Mini Football",
+  },
+  {
+    id: "creators",
+    index: "07",
+    label: "The Creators",
+    title: "The Creators",
+    tagline: "Digital Development Studio",
+  },
+  {
+    id: "contact",
+    index: "08",
+    label: "Contact",
+    title: "Contact",
+    tagline: "Start a Collaboration",
+  },
+];
+
+export const navLinks: { id: SectionId; label: string; href: string }[] = [
+  { id: "home", label: "Home", href: "#home" },
+  { id: "about", label: "About", href: "#about" },
+  { id: "expertise", label: "Expertise", href: "#expertise" },
+  { id: "projects", label: "Projects", href: "#projects" },
+  { id: "journey", label: "Experience", href: "#journey" },
+  { id: "sports", label: "Sports", href: "#sports" },
+  { id: "creators", label: "The Creators", href: "#creators" },
+];
 
 export interface AboutPillar {
   id: string;
