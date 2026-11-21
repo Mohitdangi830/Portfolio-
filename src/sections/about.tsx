@@ -1,110 +1,142 @@
-import { motion } from "framer-motion";
-import { GraduationCap, MapPin, Trophy, Heart, Target } from "lucide-react";
-import { profile } from "../data/portfolio";
+import { useState } from "react";
+import { ArrowUpRight } from "lucide-react";
+import { aboutPillars, profile, socials } from "../data/portfolio";
 import { Reveal, SectionHeading, TiltCard } from "../components/ui";
 
-const CARDS = [
-  { icon: GraduationCap, label: "Education", value: profile.education, sub: profile.school },
-  { icon: MapPin, label: "Location", value: profile.location, sub: "Open to remote & on-site" },
-  { icon: Trophy, label: "Current Role", value: profile.currentRole, sub: "Leadership in sports" },
-  { icon: Target, label: "Career Goal", value: "Software developer + national lacrosse player", sub: "Code by day, train by evening" },
-];
-
 export function About() {
+  const [imgError, setImgError] = useState(false);
+
   return (
-    <section id="about" className="section-fade relative z-10 scroll-mt-20 py-24 md:py-32" aria-label="About Mohit Dangi">
+    <section
+      id="about"
+      className="relative z-10 scroll-mt-20 border-t py-24 md:py-32"
+      style={{ borderColor: "var(--border)" }}
+      aria-label="About Mohit Dangi"
+    >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <SectionHeading
-          kicker="Digital Identity"
-          title="WHO"
-          accent="AM I?"
-          description="A developer in the making — blending classroom computer science, self-driven building, and real-world leadership from sport."
-        />
+        <div className="grid items-start gap-12 lg:grid-cols-[0.88fr_1.12fr] lg:gap-16">
+          {/* ── Left Column: Editorial Bio & Identity ── */}
+          <div>
+            <SectionHeading
+              kicker="About Me"
+              title="A LITTLE ABOUT"
+              accent="MY WORLD."
+            />
 
-        <div className="grid items-stretch gap-8 lg:grid-cols-[0.9fr_1.1fr]">
-          {/* ── Rotating tech element + identity card ── */}
-          <Reveal className="flex">
-            <TiltCard className="glass-strong hud-corner relative flex w-full flex-col items-center overflow-hidden rounded-3xl p-8 text-center" max={7}>
-              <div className="scanline" aria-hidden="true" />
-              {/* Profile Avatar */}
-              <div className="relative mb-6">
-                <div className="absolute -inset-3 rounded-full bg-gradient-to-r from-cyan-500/30 to-violet-600/30 blur-xl" aria-hidden="true" />
-                <div className="group relative flex h-32 w-32 items-center justify-center overflow-hidden rounded-full border-2 border-cyan-400/60 bg-[#070a22] p-1.5 shadow-[0_0_30px_rgba(34,211,238,0.35)] transition-transform duration-300 hover:scale-105 sm:h-36 sm:w-36">
-                  {profile.profilePhoto ? (
-                    <img
-                      src={profile.profilePhoto}
-                      alt={`${profile.name} — Profile Picture`}
-                      className="h-full w-full rounded-full object-cover"
-                    />
-                  ) : (
-                    <div className="flex h-full w-full items-center justify-center font-display text-3xl font-bold text-cyan-200">
-                      MD
-                    </div>
-                  )}
-                  {/* Status beacon */}
-                  <span
-                    className="absolute right-1 bottom-1 flex h-6 w-6 items-center justify-center rounded-full border border-emerald-400/60 bg-[#030014] shadow-md"
-                    title="Active"
+            <Reveal delay={0.14}>
+              <div className="space-y-5 text-base leading-relaxed" style={{ color: "var(--ink-dim)" }}>
+                <p>
+                  I&apos;m <strong className="font-semibold" style={{ color: "var(--ink)" }}>Mohit Dangi</strong> — a
+                  technology enthusiast, software and web developer, and creative problem solver based in{" "}
+                  <span style={{ color: "var(--ink)" }}>{profile.location}</span>.
+                </p>
+                <p>
+                  As the founder of{" "}
+                  <a
+                    href={socials.theCreators}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-0.5 font-medium underline decoration-[#3987FF]/50 underline-offset-4 transition-colors hover:text-[#3987FF]"
+                    style={{ color: "var(--ink)" }}
                   >
-                    <span className="h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399]" />
-                  </span>
-                </div>
-              </div>
-
-              <h3 className="font-display text-2xl font-bold tracking-wide">{profile.name.toUpperCase()}</h3>
-              <p className="mt-1 text-sm font-medium" style={{ color: "var(--neon)" }}>{profile.primaryTitle}</p>
-              <p className="mt-4 max-w-xs text-xs leading-relaxed" style={{ color: "var(--ink-mute)" }}>
-                {profile.tagline}
-              </p>
-
-              {/* interests */}
-              <div className="mt-6 flex flex-wrap justify-center gap-2">
-                <span className="flex w-full items-center justify-center gap-1.5 font-mono2 text-[10px] tracking-[0.25em] uppercase" style={{ color: "var(--ink-mute)" }}>
-                  <Heart className="h-3 w-3 text-rose-400" /> Interests
-                </span>
-                {profile.interests.map((interest) => (
-                  <span key={interest} className="chip rounded-full px-3 py-1 text-xs" style={{ color: "var(--ink-dim)" }}>
-                    {interest}
-                  </span>
-                ))}
-              </div>
-            </TiltCard>
-          </Reveal>
-
-          {/* ── Info panel ── */}
-          <div className="grid gap-4 sm:grid-cols-2">
-            {CARDS.map((c, i) => (
-              <Reveal key={c.label} delay={i * 0.08} className="flex">
-                <div className="glass card-lift group relative flex-1 overflow-hidden rounded-2xl p-6">
-                  <div className="absolute top-0 left-0 h-1 w-0 bg-gradient-to-r from-cyan-400 to-violet-500 transition-all duration-500 group-hover:w-full" aria-hidden="true" />
-                  <c.icon className="h-6 w-6 text-cyan-400 transition-transform duration-300 group-hover:scale-125 group-hover:-rotate-6" />
-                  <p className="font-mono2 mt-4 text-[10px] tracking-[0.3em] uppercase" style={{ color: "var(--ink-mute)" }}>{c.label}</p>
-                  <p className="font-display mt-2 text-[15px] leading-snug font-semibold">{c.value}</p>
-                  <p className="mt-1 text-xs" style={{ color: "var(--ink-mute)" }}>{c.sub}</p>
-                </div>
-              </Reveal>
-            ))}
-            {/* bio strip */}
-            <Reveal delay={0.35} className="sm:col-span-2">
-              <div className="glass-strong relative overflow-hidden rounded-2xl p-6 md:p-7">
-                <div className="absolute -top-16 -right-16 h-48 w-48 rounded-full bg-violet-600/15 blur-3xl" aria-hidden="true" />
-                <p className="font-mono2 text-[10px] tracking-[0.3em] uppercase" style={{ color: "var(--neon)" }}>{"// profile.log"}</p>
-                <motion.p
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.8, delay: 0.2 }}
-                  className="mt-3 text-sm leading-relaxed sm:text-[15px]"
-                  style={{ color: "var(--ink-dim)" }}
-                >
-                  I'm <strong style={{ color: "var(--ink)" }}>{profile.name}</strong>, a {profile.education.toLowerCase()} student
-                  from {profile.location}. I spend my time learning programming, building web projects, and exploring
-                  artificial intelligence — while serving as{" "}
-                  <strong style={{ color: "var(--ink)" }}>{profile.currentRole}</strong>, where I learned
-                  what real teamwork and responsibility look like. My goal: {profile.careerGoal.charAt(0).toLowerCase() + profile.careerGoal.slice(1)}
-                </motion.p>
+                    The Creators
+                    <ArrowUpRight className="h-3.5 w-3.5" />
+                  </a>
+                  , I focus on turning ideas into clean, scalable digital products — from web platforms and
+                  desktop AI utilities to brand systems and interactive visuals.
+                </p>
+                <p>
+                  Away from the code editor, competitive sport shapes how I lead. Through{" "}
+                  <span style={{ color: "var(--ink)" }}>Rajasthan Lacrosse</span> and national-level participation in
+                  Lacrosse and Mini Football, I&apos;ve learned how discipline, teamwork, and composed execution under
+                  pressure drive lasting impact.
+                </p>
               </div>
             </Reveal>
+
+            {/* Clean unboxed metadata strip */}
+            <Reveal delay={0.2}>
+              <div
+                className="mt-8 flex flex-wrap items-center gap-x-3 gap-y-2 border-t pt-6 text-xs"
+                style={{ borderColor: "var(--border)", color: "var(--ink-muted)" }}
+              >
+                <span>{profile.education}</span>
+                <span aria-hidden="true">·</span>
+                <span>State Team Manager, Rajasthan Lacrosse</span>
+                <span aria-hidden="true">·</span>
+                <span>Passionate about Innovation</span>
+              </div>
+            </Reveal>
+
+            {/* Editorial Profile Photograph Frame */}
+            <Reveal delay={0.24}>
+              <div
+                className="mt-8 flex items-center gap-5 rounded-2xl border p-4"
+                style={{ backgroundColor: "var(--bg-secondary)", borderColor: "var(--border)" }}
+              >
+                <div
+                  className="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-xl border"
+                  style={{ borderColor: "var(--border)", backgroundColor: "var(--bg)" }}
+                >
+                  {!imgError ? (
+                    <img
+                      src={profile.profilePhoto}
+                      alt="Mohit Dangi digital monogram"
+                      referrerPolicy="no-referrer"
+                      onError={() => setImgError(true)}
+                      className="h-full w-full object-cover"
+                    />
+                  ) : (
+                    <span className="font-display text-xl font-bold" style={{ color: "var(--accent)" }}>
+                      MD
+                    </span>
+                  )}
+                </div>
+                <div>
+                  <p className="font-display text-base font-semibold">{profile.name}</p>
+                  <p className="mt-1 text-sm" style={{ color: "var(--ink-muted)" }}>
+                    {profile.floatingStatement}
+                  </p>
+                </div>
+              </div>
+            </Reveal>
+          </div>
+
+          {/* ── Right Column: Asymmetric Animated Information Cards ── */}
+          <div className="grid gap-5 sm:grid-cols-2 lg:pt-8">
+            {aboutPillars.map((pillar, i) => (
+              <Reveal key={pillar.id} delay={i * 0.08} className={i % 2 === 1 ? "sm:translate-y-6" : ""}>
+                <TiltCard
+                  max={5}
+                  className="gradient-border-card flex h-full flex-col justify-between rounded-2xl p-6"
+                >
+                  <div>
+                    <div className="flex items-center justify-between text-xs">
+                      <span
+                        className="font-mono2 font-medium"
+                        style={{ color: pillar.accent === "orange" ? "#FF7138" : "var(--accent)" }}
+                      >
+                        {pillar.index}
+                      </span>
+                      <span style={{ color: "var(--ink-muted)" }}>{pillar.subtitle}</span>
+                    </div>
+                    <h3 className="font-display mt-5 text-xl font-bold tracking-tight">
+                      {pillar.title}
+                    </h3>
+                    <p className="mt-3 text-sm leading-relaxed" style={{ color: "var(--ink-muted)" }}>
+                      {pillar.description}
+                    </p>
+                  </div>
+
+                  <p
+                    className="mt-6 border-t pt-4 text-xs leading-relaxed"
+                    style={{ borderColor: "var(--border)", color: "var(--ink-dim)" }}
+                  >
+                    {pillar.detail}
+                  </p>
+                </TiltCard>
+              </Reveal>
+            ))}
           </div>
         </div>
       </div>
